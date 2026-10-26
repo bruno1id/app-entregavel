@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1F3A5F">
+<title>Calendário de Maria 2027 · Área da cliente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1F3A5F;--navy-d:#16294A;--navy-l:#E3EAF3;
+  --cream:#FBF7EF;--sand:#F2ECE0;--paper:#FFFDF8;
+  --gold:#B08A3E;--gold-l:#D8C08A;--gold-t:#7A5A23;
+  --ink:#2A2F3A;--muted:#5B6170;--line:#E7D9BC;
+  --green:#15803D;--green-d:#116932;--red:#B91C1C;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Nunito Sans',system-ui,sans-serif;--script:'Pinyon Script',cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--navy)}
+
+/* topo */
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 4px 16px rgba(22,41,74,.25)}
+.brand small{display:block;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#E4C98F}
+.brand b{display:block;font-family:var(--serif);font-size:22px;line-height:1.1}
+.plan{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:5px 10px;white-space:nowrap}
+
+/* navegação */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:4px 4px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -6px 18px rgba(31,58,95,.08)}
+.tab{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;min-height:56px;border-radius:12px;color:var(--muted);font-size:11px;font-weight:700;cursor:pointer}
+.tab svg{width:22px;height:22px}
+.tab[aria-current="page"]{color:var(--navy);background:var(--navy-l)}
+@media (min-width:900px){
+  body{padding-bottom:0}
+  .tabs{position:sticky;top:62px;bottom:auto;display:flex;justify-content:center;gap:6px;border-top:0;border-bottom:1px solid var(--line);box-shadow:none;padding:8px}
+  .tab{flex-direction:row;gap:8px;font-size:15px;padding:8px 16px;min-height:44px}
+}
+
+main{max-width:760px;margin:0 auto;padding:20px 16px 32px}
+h1,h2,h3{font-family:var(--serif);color:var(--navy);margin:0;line-height:1.1}
+h1{font-size:34px}h2{font-size:28px}h3{font-size:22px}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-t)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.card.navy{background:var(--navy);border-color:var(--navy);color:#fff}
+.card.navy h2,.card.navy h3{color:#fff}
+.card.navy .eyebrow{color:#E4C98F}
+.muted{color:var(--muted)}
+.quote{font-family:var(--serif);font-size:23px;font-style:italic;line-height:1.3;color:var(--navy)}
+.big{font-family:var(--serif);font-weight:700;font-size:44px;line-height:1}
+.tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;border-radius:999px;padding:4px 10px;background:var(--navy-l);color:var(--navy)}
+.tag.gold{background:#F6EBD3;color:var(--gold-t)}
+.tag.green{background:#DCFCE7;color:#14532D}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 20px;border-radius:999px;border:0;background:var(--green);color:#fff;font-weight:800;font-size:16px;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s;text-align:center}
+.btn:hover{background:var(--green-d)}
+.btn:active{transform:scale(.97)}
+.btn.sec{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.btn.sec:hover{background:var(--navy-l)}
+.btn.light{background:#fff;color:var(--navy)}
+.btn svg{width:18px;height:18px}
+.btn:focus-visible,.tab:focus-visible,.chip:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* seletor de mês */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;min-height:40px;font-weight:700;font-size:14px;cursor:pointer;color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* formulários */
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:700;color:var(--navy)}
+textarea,select,input[type=text]{width:100%;border:1px solid var(--gold-l);border-radius:12px;background:#fff;padding:12px;font-size:16px;line-height:1.5}
+textarea{min-height:110px;resize:vertical;background-image:repeating-linear-gradient(transparent 0 23px,#EFE4CC 23px 24px);background-attachment:local;line-height:24px}
+textarea:focus,select:focus,input:focus{outline:2px solid var(--navy);outline-offset:1px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+.check:last-child{border-bottom:0}
+.check input{width:22px;height:22px;accent-color:var(--green);flex:none;margin-top:1px}
+
+/* lista de festas */
+.festa{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.festa:last-child{border-bottom:0}
+.dia{flex:none;width:60px;text-align:center;border-radius:14px;background:var(--navy-l);color:var(--navy);padding:8px 4px}
+.dia b{display:block;font-family:var(--serif);font-size:28px;line-height:1}
+.dia span{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.festa.passou{opacity:.55}
+.festa.prox .dia{background:var(--navy);color:#fff}
+
+/* intenções */
+.item{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.item.graca{border-color:#86EFAC;background:#F0FDF4}
+.item p{margin:0;white-space:pre-wrap}
+.mini{border:0;background:none;color:var(--navy);font-weight:700;font-size:14px;padding:8px 6px;cursor:pointer;min-height:40px}
+.mini.del{color:var(--red)}
+
+/* cartões */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:12px}
+.pc{background:var(--paper);border:2px solid var(--navy);border-radius:14px;padding:16px 14px;text-align:center;display:flex;flex-direction:column;gap:8px;position:relative}
+.pc::before{content:"";position:absolute;inset:5px;border:1px solid var(--gold-l);border-radius:10px;pointer-events:none}
+.pc b{font-family:var(--serif);font-size:24px;color:var(--navy);line-height:1.1}
+.pc p{margin:0;font-size:14px;line-height:1.45}
+.pc.sorteado{border-color:var(--green);box-shadow:0 0 0 4px #BBF7D0}
+.pc .n{font-size:11px;font-weight:800;color:var(--gold-t);letter-spacing:.1em}
+
+.lock{display:flex;gap:12px;align-items:flex-start}
+.lock svg{flex:none;width:26px;height:26px;color:var(--gold-t)}
+.sub{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.preview{max-width:520px;margin:0 auto;width:100%}
+.toggle{display:flex;align-items:center;gap:10px;font-weight:700;cursor:pointer}
+.toggle input{width:22px;height:22px;accent-color:var(--navy)}
+#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ================= PÁGINAS A4 (prévia e impressão) ================= */
+.page{position:relative;width:100%;aspect-ratio:210/297;background:var(--paper);container-type:inline-size;overflow:hidden;box-shadow:0 14px 34px rgba(31,58,95,.16);border-radius:4px;margin:0 auto;color:var(--ink);font-family:var(--sans)}
+.page .in{position:absolute;inset:3.4cqw;border:.3cqw solid var(--gold-l);padding:4.6cqw 5.6cqw 3.6cqw;display:flex;flex-direction:column;text-align:center}
+.page .in::before{content:"";position:absolute;inset:1cqw;border:.12cqw solid var(--gold-l);pointer-events:none}
+.page .orn{position:absolute;width:12cqw;height:12cqw;color:var(--gold)}
+.page .orn.tl{top:-.4cqw;left:-.4cqw}.page .orn.tr{top:-.4cqw;right:-.4cqw;transform:scaleX(-1)}
+.page .orn.bl{bottom:-.4cqw;left:-.4cqw;transform:scaleY(-1)}.page .orn.br{bottom:-.4cqw;right:-.4cqw;transform:scale(-1,-1)}
+.p-lbl{font-size:2.1cqw;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-t);font-weight:800}
+.p-mes{font-family:var(--serif);font-weight:700;font-size:10cqw;line-height:1;color:var(--navy);margin-top:.8cqw}
+.p-mes span{color:var(--gold-t);font-weight:600}
+.p-inv{font-family:var(--serif);font-style:italic;font-weight:600;font-size:3.6cqw;margin-top:.6cqw}
+.p-art{display:flex;justify-content:center;margin:1.6cqw 0}
+.p-art svg{width:24cqw;height:auto}
+.p-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-left:.2cqw solid var(--gold-l);border-top:.2cqw solid var(--gold-l)}
+.p-wd{background:var(--navy);color:#fff;font-size:2.2cqw;font-weight:800;letter-spacing:.12em;padding:1.1cqw 0;border-right:.2cqw solid var(--gold-l)}
+.p-c{height:7.2cqw;border-right:.2cqw solid var(--line);border-bottom:.2cqw solid var(--line);font-family:var(--serif);font-weight:700;font-size:4.2cqw;line-height:1;text-align:left;padding:.9cqw 1.2cqw;position:relative}
+.p-c.sun{color:var(--gold-t)}
+.p-c.fe{background:#F7EEDA}
+.p-c.hl{background:var(--navy);color:#fff}
+.p-c .st{position:absolute;right:1cqw;bottom:.8cqw;width:2.6cqw;height:2.6cqw;color:var(--gold)}
+.p-c.hl .st{color:#E4C98F}
+.p-boxes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6cqw;margin-top:2.2cqw}
+.p-bx{border:.2cqw solid var(--gold-l);border-radius:1cqw;padding:1.3cqw 1.2cqw;font-size:2.2cqw;line-height:1.35;text-align:center}
+.p-bx b{display:block;font-family:var(--serif);font-size:3cqw;color:var(--navy);margin-bottom:.4cqw}
+.p-fr{margin-top:auto;padding-top:1.4cqw;font-family:var(--script);font-size:4.8cqw;color:var(--navy);line-height:1.2}
+.p-dv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6cqw;margin-top:1.4cqw;text-align:left}
+.p-dv .p-bx{text-align:left;font-size:2.3cqw}
+.p-dv.grow{flex:1;grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)}
+.p-dv.grow3{flex:1;grid-template-rows:repeat(3,minmax(0,1fr))}
+.p-dv .p-bx i{font-family:var(--serif);font-size:2.9cqw;line-height:1.3;display:block}
+.p-w{border:.2cqw solid var(--gold-l);border-radius:1cqw;padding:1.3cqw 1.4cqw;text-align:left;display:flex;flex-direction:column}
+.p-w b{font-family:var(--serif);font-size:3cqw;color:var(--navy)}
+.p-lines{flex:1;min-height:12cqw;font-size:2.4cqw;line-height:4cqw;background-image:repeating-linear-gradient(transparent 0 3.85cqw,#E3D6BF 3.85cqw 4cqw);white-space:pre-wrap;overflow:hidden}
+.p-chk{display:flex;gap:1cqw;align-items:center;margin-top:.6cqw;font-size:2.2cqw}
+.p-chk i{flex:none;width:2.2cqw;height:2.2cqw;border:.2cqw solid var(--gold);font-style:normal;font-size:2cqw;line-height:1.8cqw;text-align:center;color:var(--navy);font-weight:800}
+.p-title{font-family:var(--serif);font-weight:700;font-size:7cqw;line-height:1.05;color:var(--navy)}
+.p-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:2cqw;flex:1;margin-top:1.4cqw}
+.p-card{border:.5cqw solid var(--navy);border-radius:1.6cqw;padding:2cqw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2cqw;position:relative;text-align:center}
+.p-card::before{content:"";position:absolute;inset:.8cqw;border:.15cqw solid var(--gold-l);border-radius:1cqw}
+.p-card b{font-family:var(--serif);font-size:4.6cqw;color:var(--navy);line-height:1.05}
+.p-card p{margin:0;font-size:2.3cqw;line-height:1.4}
+.p-card small{font-size:1.6cqw;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-t);font-weight:800}
+.p-list{text-align:left;font-size:2.4cqw;line-height:1.45}
+.p-list .p-fe{display:flex;gap:2cqw;padding:1cqw 0;border-bottom:.15cqw solid var(--line)}
+.p-list .p-fe b{flex:none;width:15cqw;font-family:var(--serif);font-size:3cqw;color:var(--navy)}
+.page.flow{aspect-ratio:auto}
+.page.flow .in{position:relative;inset:auto;margin:3.4cqw;min-height:134cqw}
+
+/* versão econômica: pouca tinta */
+.econ .page{background:#fff;box-shadow:none;border:1px solid #ddd}
+.econ .page .in,.econ .p-bx,.econ .p-w,.econ .p-grid,.econ .p-wd,.econ .p-c{border-color:#9a9a9a!important}
+.econ .page .in::before{border-color:#bdbdbd}
+.econ .p-wd{background:#fff;color:#222;border-bottom:.2cqw solid #9a9a9a}
+.econ .p-c.hl{background:#fff;color:#111;box-shadow:inset 0 0 0 .5cqw #555}
+.econ .p-c.fe{background:#fff}
+.econ .p-mes,.econ .p-bx b,.econ .p-w b,.econ .p-fr,.econ .p-title,.econ .p-card b{color:#222}
+.econ .p-card{border-color:#555}
+.econ .p-art svg *{fill:none!important;stroke:#6b6b6b!important;stroke-width:1.1!important}
+.econ .orn{color:#9a9a9a}
+.econ .p-lines{background-image:repeating-linear-gradient(transparent 0 3.85cqw,#cfcfcf 3.85cqw 4cqw)}
+
+#print-area{display:none}
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{background:#fff!important;padding:0!important;margin:0!important}
+  body>*:not(#print-area){display:none!important}
+  #print-area{display:block!important}
+  #print-area .page{width:210mm;height:297mm;aspect-ratio:auto;box-shadow:none;border-radius:0;border:0;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #print-area .page.flow{height:auto;min-height:297mm}
+  #print-area .page:last-child{break-after:auto;page-break-after:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><small>Ponto da Fé</small><b>Calendário de Maria 2027</b></div>
+  <span class="plan" id="plan-badge"></span>
+</header>
+<nav class="tabs" id="tabs" aria-label="Seções"></nav>
+<main id="app" tabindex="-1"></main>
+<div id="print-area"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — o script de montagem troca estes valores
+   ============================================================ */
+const CONFIG = {
+  plano: 'basico',                                   // 'completo' ou 'basico'
+  linkComunidade: '',                                  // link de convite do grupo/canal Ponto da Fé
+  linkUpgrade: 'https://pay.kiwify.com.br/cs4Cybm'     // checkout do Plano Completo
+};
+</script>
+<script>
+// ============================================================
+// CONTEÚDO DO CALENDÁRIO DE MARIA 2027
+// Edite os textos aqui. Datas no formato [mês, dia] (mês de 1 a 12).
+// ============================================================
+
+const MESES = [
+  {
+    nome: 'Janeiro', invoc: 'Santa Maria, Mãe de Deus', destaque: 1,
+    festa: '1º/1 · Santa Maria, Mãe de Deus', virtude: 'Confiança',
+    jac: 'Santa Mãe de Deus, rogai por nós.', frase: 'Com Maria, um ano novo de fé',
+    mariaMes: 'Começamos o ano celebrando Maria como Mãe de Deus. Sob o seu olhar, entregamos a ela os planos, os sonhos e as preocupações de 2027.',
+    palavra: 'Maria guardava todas estas coisas, meditando-as em seu coração.', ref: 'Lc 2,19',
+    oracao: 'Santa Maria, Mãe de Deus, abençoai este novo ano. Guardai minha família e ensinai-me a confiar em Deus em cada dia. Amém.',
+    gestos: ['Consagrar o ano a Nossa Senhora', 'Escolher uma intenção para o ano', 'Rezar um terço em família']
+  },
+  {
+    nome: 'Fevereiro', invoc: 'Nossa Senhora de Lourdes', destaque: 11,
+    festa: '11/2 · Nossa Senhora de Lourdes', virtude: 'Humildade',
+    jac: 'Nossa Senhora de Lourdes, rogai por nós.', frase: 'A Mãe que cuida dos enfermos',
+    mariaMes: 'Em Lourdes, Maria apareceu a uma jovem simples e pobre, Bernadete. Neste mês rezamos de modo especial pelos doentes, no Dia Mundial do Enfermo.',
+    palavra: 'O Senhor olhou para a humildade de sua serva.', ref: 'Lc 1,48',
+    oracao: 'Nossa Senhora de Lourdes, cuidai dos doentes que conheço e dai-lhes consolo e força. Ensinai-me a servir com humildade. Amém.',
+    gestos: ['Rezar por um doente', 'Ligar para quem está sozinho', 'Fazer um gesto escondido de humildade']
+  },
+  {
+    nome: 'Março', invoc: 'Nossa Senhora das Dores', destaque: 26,
+    festa: '26/3 · Sexta-feira da Paixão', virtude: 'Fortaleza',
+    jac: 'Mãe dolorosa, rogai por nós.', frase: 'Aos pés da cruz, com Maria',
+    mariaMes: 'Na Quaresma e na Semana Santa contemplamos Maria de pé junto à cruz de Jesus. Ela nos ensina a permanecer fiéis mesmo na dor.',
+    palavra: 'Junto à cruz de Jesus estava de pé sua mãe.', ref: 'Jo 19,25',
+    oracao: 'Mãe das Dores, ficai comigo nos momentos difíceis. Ajudai-me a carregar minha cruz com fé e esperança. Amém.',
+    gestos: ['Fazer um pequeno jejum', 'Rezar a Via-Sacra', 'Perdoar alguém de coração']
+  },
+  {
+    nome: 'Abril', invoc: 'Anunciação do Senhor', destaque: 5,
+    festa: '5/4 · Anunciação do Senhor', virtude: 'Obediência',
+    jac: 'Faça-se em mim segundo a vossa palavra.', frase: 'O sim que mudou a história',
+    mariaMes: 'Em 2027, o 25 de março cai na Semana Santa, e a Anunciação é celebrada em 5 de abril. Recordamos o sim de Maria, que abriu as portas para a salvação.',
+    palavra: 'Eis aqui a serva do Senhor; faça-se em mim segundo a tua palavra.', ref: 'Lc 1,38',
+    oracao: 'Virgem da Anunciação, ensinai-me a dizer sim a Deus todos os dias, nas coisas grandes e nas pequenas. Amém.',
+    gestos: ['Rezar o Ângelus ao meio-dia', 'Dizer sim a um pedido difícil', 'Agradecer pela Páscoa de Jesus']
+  },
+  {
+    nome: 'Maio', invoc: 'Nossa Senhora de Fátima', destaque: 13,
+    festa: '13/5 · Nossa Senhora de Fátima', virtude: 'Conversão',
+    jac: 'Nossa Senhora de Fátima, rogai por nós.', frase: 'Maio, mês de Maria',
+    mariaMes: 'Maio é o mês de Maria. Em Fátima, ela pediu a oração do terço, conversão e paz para o mundo. É tempo de coroar Nossa Senhora em casa.',
+    palavra: 'Fazei tudo o que Ele vos disser.', ref: 'Jo 2,5',
+    oracao: 'Nossa Senhora de Fátima, ensinai-me a rezar o terço com amor e trazei paz ao mundo e à minha casa. Amém.',
+    gestos: ['Rezar o terço todos os dias', 'Montar um altar para Maria', 'Rezar pela paz no mundo']
+  },
+  {
+    nome: 'Junho', invoc: 'Imaculado Coração de Maria', destaque: 5,
+    festa: '5/6 · Imaculado Coração de Maria', virtude: 'Pureza de coração',
+    jac: 'Doce Coração de Maria, sede a minha salvação.', frase: 'Um coração que guarda Deus',
+    mariaMes: 'No sábado depois da festa do Sagrado Coração de Jesus celebramos o Imaculado Coração de Maria, que guardava e meditava tudo o que vivia com o seu Filho.',
+    palavra: 'Sua mãe conservava tudo isso no coração.', ref: 'Lc 2,51',
+    oracao: 'Imaculado Coração de Maria, refúgio dos pecadores, guardai meu coração em Deus. A vós consagro a minha família. Amém.',
+    gestos: ['Consagrar-se ao Imaculado Coração', 'Rezar no primeiro sábado', 'Fazer um exame de consciência']
+  },
+  {
+    nome: 'Julho', invoc: 'Nossa Senhora do Carmo', destaque: 16,
+    festa: '16/7 · Nossa Senhora do Carmo', virtude: 'Perseverança',
+    jac: 'Nossa Senhora do Carmo, rogai por nós.', frase: 'Revestida do manto de Maria',
+    mariaMes: 'Nossa Senhora do Carmo nos lembra o escapulário, sinal de que pertencemos a Maria e queremos viver como filhos dela.',
+    palavra: 'Felizes os que ouvem a palavra de Deus e a põem em prática.', ref: 'Lc 11,28',
+    oracao: 'Virgem do Carmo, cobri-me com o vosso manto e não me deixeis afastar de Jesus. Amém.',
+    gestos: ['Usar ou abençoar o escapulário', 'Ler um trecho do Evangelho', 'Visitar Jesus no Santíssimo']
+  },
+  {
+    nome: 'Agosto', invoc: 'Assunção de Nossa Senhora', destaque: 15,
+    festa: '15/8 · Assunção de Nossa Senhora', virtude: 'Alegria',
+    jac: 'Maria, elevada ao céu, rogai por nós.', frase: 'Rumo ao céu com Maria',
+    mariaMes: 'Na Assunção celebramos Maria levada ao céu em corpo e alma. Ela é sinal do destino que Deus prepara para todos nós. Agosto também é o mês das vocações.',
+    palavra: 'A minha alma engrandece o Senhor.', ref: 'Lc 1,46',
+    oracao: 'Maria, elevada ao céu, ajudai-me a viver com os olhos no céu e os pés no chão, servindo com alegria. Amém.',
+    gestos: ['Rezar o Magnificat', 'Rezar pelas vocações', 'Visitar alguém idoso']
+  },
+  {
+    nome: 'Setembro', invoc: 'Natividade de Nossa Senhora', destaque: 8,
+    festa: '8/9 · Natividade de Nossa Senhora', virtude: 'Simplicidade',
+    jac: 'Santa Maria, aurora da salvação, rogai por nós.', frase: 'Nasce a Mãe do Salvador',
+    mariaMes: 'Em 8 de setembro celebramos o nascimento de Maria. Setembro também é o mês da Bíblia: um ótimo tempo para ler a Palavra ao lado dela.',
+    palavra: 'Feliz aquela que acreditou.', ref: 'Lc 1,45',
+    oracao: 'Menina Maria, que nascestes para ser a Mãe de Jesus, renovai em mim a alegria de recomeçar. Amém.',
+    gestos: ['Ler um capítulo da Bíblia por dia', 'Celebrar o aniversário de Maria', 'Agradecer pela própria vida']
+  },
+  {
+    nome: 'Outubro', invoc: 'Nossa Senhora Aparecida', destaque: 12,
+    festa: '12/10 · Nossa Senhora Aparecida', virtude: 'Esperança',
+    jac: 'Mãe Aparecida, rogai por nós.', frase: 'Sob seu manto, esperança renovada',
+    mariaMes: 'Outubro é o mês do Rosário e da Padroeira do Brasil. Aos pés de Aparecida colocamos a nossa casa, os nossos planos e o nosso país.',
+    palavra: 'Sede alegres na esperança, pacientes na tribulação e perseverantes na oração.', ref: 'Rm 12,12',
+    oracao: 'Mãe Aparecida, cuidai da minha família e do Brasil. Guardai-nos no caminho de Jesus. Amém.',
+    gestos: ['Rezar um mistério do Rosário por dia', 'Agradecer uma graça recebida', 'Rezar pelo Brasil']
+  },
+  {
+    nome: 'Novembro', invoc: 'Apresentação de Nossa Senhora', destaque: 21,
+    festa: '21/11 · Apresentação de Nossa Senhora', virtude: 'Entrega',
+    jac: 'Virgem consagrada a Deus, rogai por nós.', frase: 'Tudo para Deus, como Maria',
+    mariaMes: 'Em 21 de novembro recordamos a tradição de que Maria foi apresentada ao Templo ainda menina. Neste mês também rezamos pelos nossos falecidos.',
+    palavra: 'A minha alma tem sede de Deus, do Deus vivo.', ref: 'Sl 42,3',
+    oracao: 'Maria, que vos entregastes inteira a Deus, ajudai-me a oferecer a Ele o meu tempo e o meu coração. Amém.',
+    gestos: ['Rezar pelos falecidos da família', 'Oferecer o dia a Deus ao acordar', 'Preparar o coração para o Advento']
+  },
+  {
+    nome: 'Dezembro', invoc: 'Imaculada Conceição', destaque: 8,
+    festa: '8/12 · Imaculada Conceição', virtude: 'Fé',
+    jac: 'Ó Maria concebida sem pecado, rogai por nós que recorremos a vós.', frase: 'Esperando Jesus com Maria',
+    mariaMes: 'Dezembro é tempo de Advento. A Imaculada Conceição nos lembra que Maria foi preparada por Deus para receber Jesus. Com ela, preparamos o Natal.',
+    palavra: 'Alegra-te, cheia de graça, o Senhor está contigo.', ref: 'Lc 1,28',
+    oracao: 'Virgem Imaculada, preparai meu coração para receber Jesus neste Natal, com fé, paz e alegria. Amém.',
+    gestos: ['Montar o presépio em família', 'Fazer a novena de Natal', 'Doar algo a quem precisa']
+  }
+];
+
+// Celebrações marianas e datas especiais de 2027
+const FESTAS = [
+  [1, 1, 'Santa Maria, Mãe de Deus', 'Solenidade que abre o ano: Maria é a Mãe de Jesus, verdadeiro Deus e verdadeiro homem.'],
+  [2, 2, 'Apresentação do Senhor (N. Sra. das Candeias)', 'Maria e José levam o Menino Jesus ao Templo, e Simeão o reconhece como luz das nações.'],
+  [2, 11, 'Nossa Senhora de Lourdes', 'Aparições a Santa Bernadete em 1858. É também o Dia Mundial do Enfermo.'],
+  [3, 26, 'Sexta-feira da Paixão', 'Dia de contemplar Maria de pé junto à cruz de Jesus.'],
+  [4, 5, 'Anunciação do Senhor', 'O anjo anuncia a Maria que ela será a Mãe do Salvador. Em 2027 a festa passa para 5 de abril, porque 25 de março cai na Semana Santa.'],
+  [5, 13, 'Nossa Senhora de Fátima', 'Aparições a três pastorinhos em Portugal, em 1917, com o pedido de oração do terço, conversão e paz.'],
+  [5, 17, 'Maria, Mãe da Igreja', 'Celebrada na segunda-feira depois de Pentecostes: a Mãe de Jesus é também Mãe de toda a Igreja.'],
+  [5, 31, 'Visitação de Nossa Senhora', 'Maria visita sua prima Isabel e canta o Magnificat. Encerra o mês de Maria.'],
+  [6, 5, 'Imaculado Coração de Maria', 'Celebrado no sábado depois da solenidade do Sagrado Coração de Jesus.'],
+  [7, 16, 'Nossa Senhora do Carmo', 'Padroeira da Ordem do Carmo, ligada à devoção do escapulário.'],
+  [8, 15, 'Assunção de Nossa Senhora', 'Maria é elevada ao céu em corpo e alma. Em 2027 a solenidade cai num domingo.'],
+  [8, 22, 'Nossa Senhora Rainha', 'Uma semana depois da Assunção, celebramos Maria coroada Rainha do céu e da terra.'],
+  [9, 8, 'Natividade de Nossa Senhora', 'O aniversário de Maria, nove meses depois da Imaculada Conceição.'],
+  [9, 15, 'Nossa Senhora das Dores', 'Recorda as sete dores de Maria, unida ao sofrimento de Jesus.'],
+  [10, 7, 'Nossa Senhora do Rosário', 'Festa ligada à oração do Rosário, a quem todo o mês de outubro é dedicado.'],
+  [10, 12, 'Nossa Senhora Aparecida', 'Padroeira do Brasil. A imagem foi encontrada por três pescadores no rio Paraíba do Sul, em 1717.'],
+  [11, 21, 'Apresentação de Nossa Senhora', 'Tradição de que Maria foi apresentada ao Templo e consagrada a Deus ainda menina.'],
+  [11, 27, 'Nossa Senhora das Graças', 'Aparição a Santa Catarina Labouré em 1830, origem da Medalha Milagrosa.'],
+  [12, 8, 'Imaculada Conceição', 'Maria foi preservada do pecado original desde o primeiro instante da sua vida.'],
+  [12, 12, 'Nossa Senhora de Guadalupe', 'Padroeira da América Latina. Apareceu a São Juan Diego no México, em 1531.']
+];
+
+// Bônus 1 · 50 cartões de oração
+const CARTOES = [
+  ['Confie', 'Maria, ensina-me a confiar como tu confiaste, mesmo quando não entendo os caminhos de Deus.'],
+  ['Entregue', 'Mãe, entrego em tuas mãos o que me pesa hoje. Leva tudo ao teu Filho.'],
+  ['Agradeça', 'Obrigada, Senhor, pelas graças de hoje: as que eu vejo e as que ainda não percebi.'],
+  ['Persevere', 'Nossa Senhora, sustenta-me quando eu quiser desistir. Que eu continue com fé.'],
+  ['Espere', 'Mãe da Esperança, guarda acesa em mim a certeza de que Deus age no tempo certo.'],
+  ['Reze pela família', 'Maria, cobre minha casa com teu manto e une cada um de nós no amor de Jesus.'],
+  ['Acolha', 'Ensina-me, Mãe, a acolher o outro com paciência e um coração aberto.'],
+  ['Contemple', 'Que eu saiba parar, Maria, e guardar no coração as coisas de Deus, como tu.'],
+  ['Recomece', 'Mãe, hoje é dia de recomeçar. Segura minha mão e não me deixes voltar atrás.'],
+  ['Interceda', 'Nossa Senhora, apresenta a Jesus o pedido que eu nem sei dizer em palavras.'],
+  ['Caminhe com Maria', 'Mãe, caminha comigo hoje, em cada passo, cada encontro e cada decisão.'],
+  ['Silêncio', 'Maria, dá-me um coração silencioso, capaz de ouvir a voz de Deus.'],
+  ['Humildade', 'Serva do Senhor, ensina-me a servir sem esperar aplausos.'],
+  ['Paz', 'Rainha da Paz, acalma minhas aflições e faz de mim um instrumento de paz.'],
+  ['Perdão', 'Mãe de misericórdia, ajuda-me a perdoar quem me feriu, como Jesus perdoou.'],
+  ['Coragem', 'Maria, que estiveste firme aos pés da cruz, dá-me coragem diante das dificuldades.'],
+  ['Alegria', 'Causa da nossa alegria, enche meu dia de uma alegria que vem de Deus.'],
+  ['Gratidão', 'Que minha alma também saiba engrandecer o Senhor hoje, como a tua, Maria.'],
+  ['Saúde', 'Saúde dos enfermos, olha por quem está doente em minha família e cuida de cada um.'],
+  ['Proteção', 'À vossa proteção recorremos, Santa Mãe de Deus. Livrai-me de todo mal.'],
+  ['Filhos', 'Mãe, entrego meus filhos ao teu cuidado. Guarda-os no caminho do bem.'],
+  ['Casamento', 'Nossa Senhora, abençoa meu casamento como abençoaste as bodas de Caná.'],
+  ['Trabalho', 'Maria de Nazaré, santifica o meu trabalho e dá-me o pão de cada dia.'],
+  ['Fé', 'Feliz aquela que acreditou! Aumenta, Mãe, a minha fé.'],
+  ['Mansidão', 'Ensina-me a responder com mansidão, mesmo quando eu estiver cansada.'],
+  ['Cuidado', 'Mãe, que eu cuide dos meus como tu cuidaste de Jesus em Nazaré.'],
+  ['Escuta', 'Fazei tudo o que Ele vos disser. Mãe, ajuda-me a ouvir e obedecer.'],
+  ['Luz', 'Estrela da manhã, ilumina minhas escolhas e afasta minhas dúvidas.'],
+  ['Consolo', 'Consoladora dos aflitos, enxuga minhas lágrimas e renova minhas forças.'],
+  ['Pureza', 'Imaculada, guarda puro o meu coração, meus olhos e minhas palavras.'],
+  ['Servir', 'Como foste depressa visitar Isabel, que eu também vá ao encontro de quem precisa.'],
+  ['Oração', 'Mãe, ensina-me a rezar com o coração, sem pressa e sem medo.'],
+  ['Lar', 'Nossa Senhora, mora em minha casa e faz dela um lugar de paz.'],
+  ['Amizade', 'Maria, abençoa minhas amizades e afasta de mim o que me afasta de Deus.'],
+  ['Paciência', 'Ensina-me a esperar, Mãe, como esperaste em silêncio os tempos de Deus.'],
+  ['Provisão', 'Mãe, tu viste que faltava vinho em Caná. Vê também o que falta em minha casa.'],
+  ['Força', 'Virgem fiel, quando eu fraquejar, sê tu a minha força.'],
+  ['Caridade', 'Que o amor de Deus transborde de mim em gestos simples hoje.'],
+  ['Abandono', 'Faça-se em mim segundo a tua palavra. Mãe, ajuda-me a dizer sim.'],
+  ['Renovação', 'Mãe, renova em mim o primeiro amor, a primeira fé, a primeira alegria.'],
+  ['Vocação', 'Maria, ajuda-me a descobrir e a viver aquilo para que Deus me chamou.'],
+  ['Viagem', 'Nossa Senhora, acompanha quem está na estrada e traze-os de volta em paz.'],
+  ['Desatar os nós', 'Mãe, desata os nós da minha vida que eu sozinha não consigo desatar.'],
+  ['Descanso', 'Antes de dormir, Mãe, entrego meu dia e descanso no teu colo.'],
+  ['Bom dia', 'Bom dia, Mãe! Consagro a ti este dia, meus pensamentos e meus passos.'],
+  ['Luto', 'Mãe das Dores, consola quem perdeu alguém e fortalece nossa esperança na ressurreição.'],
+  ['Unidade', 'Maria, une minha família onde há distância, mágoa ou silêncio.'],
+  ['Simplicidade', 'Mulher de Nazaré, ensina-me a encontrar Deus nas coisas simples do dia.'],
+  ['Missão', 'Estrela da evangelização, faz de mim sinal do amor de Jesus por onde eu passar.'],
+  ['Ave Maria', 'Ave Maria, cheia de graça, rogai por nós, pecadores, agora e na hora de nossa morte. Amém.']
+];
+
+// Bônus 2 · Preparando 2027 com Maria
+const VIRTUDES = ['Fé', 'Esperança', 'Caridade', 'Humildade', 'Paciência', 'Mansidão', 'Perseverança', 'Gratidão'];
+const ORACAO_ENTREGA = 'Senhor, ao começar 2027, coloco em tuas mãos tudo o que sou e tudo o que tenho. Pelas mãos de Maria, entrego meus planos, minha família, meu trabalho e minha saúde. O que for da tua vontade, que aconteça; o que não for, afasta de mim. Que Nossa Senhora caminhe comigo em cada mês deste ano. Amém.';
+
+</script>
+<script>
+(function () {
+'use strict';
+const COMPLETO = CONFIG.plano === 'completo';
+const ANO = 2027;
+const DIAS = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
+const DIAS_LONGO = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+const MESES_CURTO = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+const $ = (s) => document.querySelector(s);
+
+/* ---------- armazenamento local (fica só no aparelho da cliente) ---------- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('cm27:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('cm27:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* ---------- datas ---------- */
+function hoje() {
+  const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Fortaleza', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()).split('-').map(Number);
+  return { y: p[0], m: p[1], d: p[2] };
+}
+const utc = (y, m, d) => Date.UTC(y, m - 1, d);
+const diaSemana = (y, m, d) => new Date(utc(y, m, d)).getUTCDay();
+const diasEntre = (a, b) => Math.round((b - a) / 86400000);
+function mesAtual() { const t = hoje(); return t.y === ANO ? t.m - 1 : (t.y < ANO ? 0 : 11); }
+function festasDoMes(i) { return FESTAS.filter((f) => f[0] === i + 1); }
+
+/* ---------- ilustrações ---------- */
+function maria() {
+  return '<svg viewBox="0 0 120 140" aria-hidden="true">' +
+    '<circle cx="60" cy="46" r="34" fill="#F6E7C9"/>' +
+    '<circle cx="60" cy="46" r="34" fill="none" stroke="#B08A3E" stroke-width="1.4"/>' +
+    '<g fill="#B08A3E"><circle cx="60" cy="9" r="1.6"/><circle cx="34" cy="20" r="1.4"/><circle cx="86" cy="20" r="1.4"/><circle cx="24" cy="44" r="1.2"/><circle cx="96" cy="44" r="1.2"/></g>' +
+    '<path d="M60 16 C38 16 28 40 28 62 L18 136 L102 136 L92 62 C92 40 82 16 60 16 Z" fill="#2E5583"/>' +
+    '<path d="M28 62 C34 46 44 36 60 34 C76 36 86 46 92 62" fill="none" stroke="#D8C08A" stroke-width="1.4"/>' +
+    '<path d="M44 72 Q60 64 76 72 L82 136 L38 136 Z" fill="#F7EFE6"/>' +
+    '<path d="M50 78 L52 136 M70 78 L68 136" stroke="#EADFCB" stroke-width="1"/>' +
+    '<ellipse cx="60" cy="48" rx="18" ry="22" fill="#FBF3EA"/>' +
+    '<ellipse cx="60" cy="49" rx="13" ry="16" fill="#F0D3BF"/>' +
+    '<path d="M54 50 Q56 52 58 50 M62 50 Q64 52 66 50" stroke="#8A6A5C" stroke-width="1" fill="none"/>' +
+    '<path d="M57 57 Q60 59 63 57" stroke="#B5766A" stroke-width="1" fill="none"/>' +
+    '<path d="M55 104 L60 88 L65 104 Z" fill="#F0D3BF"/>' +
+    '<g fill="#D99AA5"><circle cx="30" cy="127" r="6"/><circle cx="90" cy="127" r="6"/></g>' +
+    '<g fill="#E9BFC6"><circle cx="20" cy="117" r="4"/><circle cx="100" cy="117" r="4"/><circle cx="40" cy="134" r="3.5"/><circle cx="80" cy="134" r="3.5"/></g>' +
+    '<g fill="#9DB39F"><ellipse cx="23" cy="132" rx="6" ry="2.6"/><ellipse cx="97" cy="132" rx="6" ry="2.6"/></g>' +
+    '</svg>';
+}
+const ORN = '<svg viewBox="0 0 60 60" aria-hidden="true"><path d="M4 56 V22 C4 12 12 4 22 4 H56" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10 50 V24 C10 16 16 10 24 10 H50" fill="none" stroke="currentColor" stroke-width=".8"/><circle cx="22" cy="22" r="3" fill="currentColor"/><path d="M22 14 C26 18 26 26 22 30 C18 26 18 18 22 14 Z M14 22 C18 18 26 18 30 22 C26 26 18 26 14 22 Z" fill="none" stroke="currentColor" stroke-width=".8"/></svg>';
+const STAR = '<svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.6 6.9L22 9.3l-5.8 4.6 2 7.1L12 17l-6.2 4 2-7.1L2 9.3l7.4-.4z"/></svg>';
+function moldura(inner, extraClass) {
+  return '<section class="page' + (extraClass ? ' ' + extraClass : '') + '"><div class="in">' +
+    '<span class="orn tl">' + ORN + '</span><span class="orn tr">' + ORN + '</span><span class="orn bl">' + ORN + '</span><span class="orn br">' + ORN + '</span>' +
+    inner + '</div></section>';
+}
+
+/* ---------- páginas A4 ---------- */
+function paginaCalendario(i) {
+  const m = MESES[i];
+  const inicio = diaSemana(ANO, i + 1, 1);
+  const total = new Date(Date.UTC(ANO, i + 1, 0)).getUTCDate();
+  const festDias = festasDoMes(i).map((f) => f[1]);
+  let cells = DIAS.map((d) => '<div class="p-wd">' + d + '</div>').join('');
+  for (let k = 0; k < inicio; k++) cells += '<div class="p-c"></div>';
+  for (let d = 1; d <= total; d++) {
+    const dow = (inicio + d - 1) % 7;
+    let cls = 'p-c';
+    if (dow === 0) cls += ' sun';
+    if (d === m.destaque) cls += ' hl';
+    else if (festDias.indexOf(d) > -1) cls += ' fe';
+    cells += '<div class="' + cls + '">' + d + (festDias.indexOf(d) > -1 || d === m.destaque ? STAR : '') + '</div>';
+  }
+  const resto = (7 - ((inicio + total) % 7)) % 7;
+  for (let k = 0; k < resto; k++) cells += '<div class="p-c"></div>';
+  return moldura(
+    '<div class="p-lbl">Calendário de Maria 2027</div>' +
+    '<div class="p-mes">' + esc(m.nome) + ' <span>2027</span></div>' +
+    '<div class="p-inv">' + esc(m.invoc) + '</div>' +
+    '<div class="p-art">' + maria() + '</div>' +
+    '<div class="p-grid">' + cells + '</div>' +
+    '<div class="p-boxes">' +
+      '<div class="p-bx"><b>Celebração especial</b>' + esc(m.festa) + '</div>' +
+      '<div class="p-bx"><b>Virtude do mês</b>' + esc(m.virtude) + '</div>' +
+      '<div class="p-bx"><b>Oração breve</b>' + esc(m.jac) + '</div>' +
+    '</div>' +
+    '<div class="p-fr">' + esc(m.frase) + '</div>');
+}
+function linhas(txt) { return '<div class="p-lines">' + esc(txt || '') + '</div>'; }
+function paginaDevocional(i) {
+  const m = MESES[i];
+  const g = m.gestos.map((t, k) => '<div class="p-chk"><i>' + (store.get('dev-' + i + '-g' + k, false) ? '✓' : '') + '</i>' + esc(t) + '</div>').join('');
+  return moldura(
+    '<div class="p-lbl">Meu encontro com Maria</div>' +
+    '<div class="p-mes">' + esc(m.nome) + ' <span>2027</span></div>' +
+    '<div class="p-inv">' + esc(m.invoc) + ' · Virtude: ' + esc(m.virtude) + '</div>' +
+    '<div class="p-dv grow">' +
+      '<div class="p-bx"><b>Maria neste mês</b>' + esc(m.mariaMes) + '</div>' +
+      '<div class="p-bx"><b>Palavra para guardar</b><i>“' + esc(m.palavra) + '”</i>' + esc(m.ref) + '</div>' +
+      '<div class="p-bx"><b>Oração do mês</b>' + esc(m.oracao) + '</div>' +
+      '<div class="p-bx"><b>Meu gesto de fé</b>' + g + '</div>' +
+      '<div class="p-w"><b>Minhas intenções</b>' + linhas(store.get('dev-' + i + '-int', '')) + '</div>' +
+      '<div class="p-w"><b>Pela minha família</b>' + linhas(store.get('dev-' + i + '-fam', '')) + '</div>' +
+      '<div class="p-w"><b>Minha gratidão</b>' + linhas(store.get('dev-' + i + '-grat', '')) + '</div>' +
+      '<div class="p-w"><b>Meu mês com Maria</b>' + linhas(store.get('dev-' + i + '-mes', '')) + '</div>' +
+    '</div>' +
+    '<div class="p-fr">Com Maria, entrego a Deus o meu ' + esc(m.nome.toLowerCase()) + '</div>');
+}
+function paginaFestas() {
+  const lista = FESTAS.map((f) => '<div class="p-fe"><b>' + f[1] + ' ' + MESES_CURTO[f[0] - 1].toLowerCase() + '</b><div><strong>' + esc(f[2]) + '</strong> · ' + DIAS_LONGO[diaSemana(ANO, f[0], f[1])] + '<br>' + esc(f[3]) + '</div></div>').join('');
+  return moldura('<div class="p-lbl">Calendário de Maria 2027</div><div class="p-title">Celebrações marianas de 2027</div><div class="p-list" style="margin-top:2cqw">' + lista + '</div>', 'flow');
+}
+function paginasCartoes() {
+  let out = '';
+  for (let p = 0; p < CARTOES.length; p += 8) {
+    const grupo = CARTOES.slice(p, p + 8).map((c) => '<div class="p-card"><b>' + esc(c[0]) + '</b><p>' + esc(c[1]) + '</p><small>Calendário de Maria</small></div>').join('');
+    out += moldura('<div class="p-lbl">Cartões de oração com Maria · recorte nas linhas</div><div class="p-cards">' + grupo + '</div>');
+  }
+  return out;
+}
+function paginasPreparando() {
+  const v = VIRTUDES.map((t, k) => '<div class="p-chk"><i>' + (store.get('prep-v' + k, false) ? '✓' : '') + '</i>' + esc(t) + '</div>').join('');
+  const p1 = moldura(
+    '<div class="p-lbl">Bônus · Preparando 2027 com Maria</div>' +
+    '<div class="p-title">Minha gratidão por 2026</div>' +
+    '<div class="p-dv grow3" style="grid-template-columns:1fr;margin-top:2cqw">' +
+      '<div class="p-w"><b>Pelo que sou grata neste ano</b>' + linhas(store.get('prep-g1', '')) + '</div>' +
+      '<div class="p-w"><b>Pessoas que Deus colocou no meu caminho</b>' + linhas(store.get('prep-g2', '')) + '</div>' +
+      '<div class="p-w"><b>Graças que recebi</b>' + linhas(store.get('prep-g3', '')) + '</div>' +
+    '</div><div class="p-fr">Obrigada, Senhor, por tudo o que vivi</div>');
+  const p2 = moldura(
+    '<div class="p-lbl">Bônus · Preparando 2027 com Maria</div>' +
+    '<div class="p-title">Minhas intenções para 2027</div>' +
+    '<div class="p-dv grow3" style="grid-template-columns:1fr;margin-top:2cqw">' +
+      '<div class="p-w"><b>Pessoal</b>' + linhas(store.get('prep-i1', '')) + '</div>' +
+      '<div class="p-w"><b>Família</b>' + linhas(store.get('prep-i2', '')) + '</div>' +
+      '<div class="p-w"><b>Pedidos especiais</b>' + linhas(store.get('prep-i3', '')) + '</div>' +
+    '</div><div class="p-fr">Pelas mãos de Maria</div>');
+  const p3 = moldura(
+    '<div class="p-lbl">Bônus · Preparando 2027 com Maria</div>' +
+    '<div class="p-title">Entrego meu novo ano a Deus</div>' +
+    '<div class="p-art">' + maria() + '</div>' +
+    '<div class="p-bx" style="font-size:2.8cqw;line-height:1.5;padding:2.4cqw"><i style="font-family:var(--serif);font-size:3.4cqw">' + esc(ORACAO_ENTREGA) + '</i></div>' +
+    '<div class="p-dv" style="margin-top:2cqw">' +
+      '<div class="p-bx"><b>Virtudes que desejo cultivar</b>' + v + '</div>' +
+      '<div class="p-w"><b>Minha intenção principal</b>' + linhas(store.get('prep-princ', '')) + '</div>' +
+    '</div><div class="p-fr">Meu novo ano nas mãos de Deus</div>');
+  return p1 + p2 + p3;
+}
+function paginaIntencoes(lista) {
+  const tipos = { pedido: 'Pedido', agradecimento: 'Agradecimento', familia: 'Pela família' };
+  const corpo = lista.length
+    ? lista.map((it) => '<div class="p-fe"><b>' + esc(it.data) + '</b><div><strong>' + tipos[it.tipo] + (it.graca ? ' · graça alcançada ✓' : '') + '</strong><br>' + esc(it.texto).replace(/\n/g, '<br>') + '</div></div>').join('')
+    : '<div class="p-lines" style="min-height:100cqw"></div>';
+  return moldura('<div class="p-lbl">Calendário de Maria 2027</div><div class="p-title">Meu caderno de intenções</div><div class="p-list" style="margin-top:2cqw">' + corpo + '</div>', 'flow');
+}
+function paginasEmBranco() {
+  const b = (t) => moldura('<div class="p-lbl">Calendário de Maria 2027</div><div class="p-title">' + t + '</div><div class="p-w" style="flex:1;margin-top:2cqw"><div class="p-lines"></div></div><div class="p-fr">Sob o manto de Maria</div>');
+  return b('Minhas intenções') + b('Minha gratidão');
+}
+
+/* ---------- impressão ---------- */
+function imprimir(html, econ) {
+  const pa = $('#print-area');
+  pa.className = econ ? 'econ' : '';
+  pa.innerHTML = html;
+  toast('Abrindo a impressão… escolha “Salvar como PDF” para guardar o arquivo.');
+  setTimeout(() => window.print(), 400);
+}
+window.addEventListener('afterprint', () => { $('#print-area').innerHTML = ''; });
+
+/* ---------- interface ---------- */
+let state = { view: store.get('view', 'hoje'), mes: store.get('mes', mesAtual()), econ: false, sub: 'cartoes', filtro: 'todas', sorteado: null, prev: false };
+const ICON = {
+  hoje: '<path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/><circle cx="12" cy="12" r="4"/>',
+  calendario: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  devocional: '<path d="M3 5h6a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H3z"/><path d="M21 5h-6a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h7z"/>',
+  festas: '<path d="M12 2l2.6 6.9L22 9.3l-5.8 4.6 2 7.1L12 17l-6.2 4 2-7.1L2 9.3l7.4-.4z"/>',
+  intencoes: '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>',
+  bonus: '<path d="M4 11h16v9H4z"/><path d="M3 7h18v4H3z"/><path d="M12 7v13M12 7C10 3 6 4 7.5 6.5 8.5 7.5 12 7 12 7zM12 7c2-4 6-3 4.5-.5C15.5 7.5 12 7 12 7z"/>',
+  print: '<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/>',
+  lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  dice: '<rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/>'
+};
+const ico = (n) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[n] + '</svg>';
+const TABS = [['hoje', 'Hoje'], ['calendario', 'Calendário'], ['devocional', 'Devocional'], ['festas', 'Festas'], ['intencoes', 'Intenções'], ['bonus', 'Bônus']];
+
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), 2600); }
+function seletorMes() {
+  return '<div class="chips" role="group" aria-label="Escolher mês">' + MESES.map((m, i) => '<button class="chip" data-mes="' + i + '" aria-pressed="' + (i === state.mes) + '">' + MESES_CURTO[i] + '</button>').join('') + '</div>';
+}
+function bloqueado(titulo, texto) {
+  return '<div class="card"><div class="lock">' + ico('lock') + '<div class="stack" style="gap:6px"><h3>' + titulo + '</h3><p class="muted" style="margin:0">' + texto + '</p></div></div>' +
+    '<a class="btn" href="' + esc(CONFIG.linkUpgrade) + '" target="_blank" rel="noopener">Quero o Plano Completo</a></div>';
+}
+function proximaFesta(t) {
+  const hojeUTC = utc(t.y, t.m, t.d);
+  for (const f of FESTAS) { const u = utc(ANO, f[0], f[1]); if (u >= hojeUTC) return { f: f, dias: diasEntre(hojeUTC, u) }; }
+  return null;
+}
+function cartaoDoDia(t) {
+  const n = diasEntre(utc(t.y, 1, 1), utc(t.y, t.m, t.d));
+  return n % CARTOES.length;
+}
+
+/* --- Hoje --- */
+function viewHoje() {
+  const t = hoje();
+  const dataTxt = DIAS_LONGO[diaSemana(t.y, t.m, t.d)] + ', ' + t.d + ' de ' + MESES[t.m - 1].nome.toLowerCase();
+  const m = MESES[mesAtual()];
+  let topo = '';
+  if (t.y < ANO) {
+    const faltam = diasEntre(utc(t.y, t.m, t.d), utc(ANO, 1, 1));
+    topo = '<div class="card navy"><span class="eyebrow">Hoje é ' + esc(dataTxt) + '</span><div class="big">Faltam ' + faltam + ' dias</div><p style="margin:0">para começar 2027 com Maria. Que tal já ir preparando o coração?</p>' +
+      '<div class="row"><button class="btn light" data-go="' + (COMPLETO ? 'bonus' : 'devocional') + '" data-sub="preparar">' + (COMPLETO ? 'Preparar meu 2027' : 'Ver janeiro') + '</button></div></div>';
+  } else {
+    topo = '<div class="card navy"><span class="eyebrow">Hoje é ' + esc(dataTxt) + '</span><h2>Bom dia com Maria</h2><p style="margin:0">Mês de ' + esc(m.nome.toLowerCase()) + ' · ' + esc(m.invoc) + '</p></div>';
+  }
+  const pf = proximaFesta(t);
+  let festa = '';
+  if (pf) {
+    const f = pf.f;
+    const quando = pf.dias === 0 ? '<span class="tag green">Hoje</span>' : '<span class="tag gold">em ' + pf.dias + (pf.dias === 1 ? ' dia' : ' dias') + '</span>';
+    festa = '<div class="card"><span class="eyebrow">' + (pf.dias === 0 ? 'Celebração de hoje' : 'Próxima celebração mariana') + '</span>' +
+      '<div class="row" style="justify-content:space-between"><h3>' + esc(f[2]) + '</h3>' + quando + '</div>' +
+      '<p class="muted" style="margin:0">' + DIAS_LONGO[diaSemana(ANO, f[0], f[1])] + ', ' + f[1] + ' de ' + MESES[f[0] - 1].nome.toLowerCase() + ' de 2027</p><p style="margin:0">' + esc(f[3]) + '</p>' +
+      '<div class="row"><button class="btn sec" data-go="festas">Ver todas as celebrações</button></div></div>';
+  }
+  const oracao = '<div class="card"><span class="eyebrow">Oração breve de ' + esc(m.nome.toLowerCase()) + '</span><div class="quote">' + esc(m.jac) + '</div>' +
+    '<div class="row"><button class="btn sec" data-go="devocional" data-mes="' + mesAtual() + '">Rezar o mês com Maria</button></div></div>';
+  let cartao;
+  if (COMPLETO) {
+    const c = CARTOES[cartaoDoDia(t)];
+    cartao = '<div class="card"><span class="eyebrow">Cartão do dia</span><div class="pc"><b>' + esc(c[0]) + '</b><p>' + esc(c[1]) + '</p></div>' +
+      '<div class="row"><button class="btn sec" data-go="bonus" data-sub="cartoes">Ver os 50 cartões</button></div></div>';
+  } else {
+    cartao = bloqueado('Cartão de oração do dia', 'Receba uma oração nova a cada dia com os 50 cartões de oração com Maria, um dos bônus do Plano Completo.');
+  }
+  const atalhos = '<div class="card"><span class="eyebrow">Para imprimir</span><div class="row">' +
+    '<button class="btn" data-act="print-cal-all">' + ico('print') + 'Calendário completo</button>' +
+    '<button class="btn sec" data-act="print-dev-all">' + ico('print') + 'Páginas devocionais</button></div></div>';
+  return '<div class="stack">' + topo + festa + oracao + cartao + atalhos + '</div>';
+}
+
+/* --- Calendário --- */
+function viewCalendario() {
+  const i = state.mes, m = MESES[i];
+  const fs = festasDoMes(i).map((f) => '<div class="festa"><div class="dia"><b>' + f[1] + '</b><span>' + DIAS[diaSemana(ANO, f[0], f[1])] + '</span></div><div><h3 style="font-size:20px">' + esc(f[2]) + '</h3><p class="muted" style="margin:4px 0 0">' + esc(f[3]) + '</p></div></div>').join('');
+  return '<div class="stack"><div><span class="eyebrow">Calendário mensal</span><h1>' + esc(m.nome) + ' de 2027</h1></div>' + seletorMes() +
+    (COMPLETO ? '<label class="toggle"><input type="checkbox" data-act="econ"' + (state.econ ? ' checked' : '') + '> Versão econômica (menos tinta)</label>' : '') +
+    '<div class="preview' + (state.econ ? ' econ' : '') + '">' + paginaCalendario(i) + '</div>' +
+    '<div class="row"><button class="btn" data-act="print-cal">' + ico('print') + 'Imprimir ' + esc(m.nome.toLowerCase()) + '</button><button class="btn sec" data-act="print-cal-all">' + ico('print') + 'Imprimir os 12 meses</button></div>' +
+    (fs ? '<div class="card"><span class="eyebrow">Celebrações de ' + esc(m.nome.toLowerCase()) + '</span>' + fs + '</div>' : '') + '</div>';
+}
+
+/* --- Devocional --- */
+function campo(k, rotulo) { return '<label class="f">' + rotulo + '<textarea data-k="' + k + '" placeholder="Escreva aqui…">' + esc(store.get(k, '')) + '</textarea></label>'; }
+function viewDevocional() {
+  const i = state.mes, m = MESES[i];
+  const gestos = m.gestos.map((g, k) => '<label class="check"><input type="checkbox" data-k="dev-' + i + '-g' + k + '"' + (store.get('dev-' + i + '-g' + k, false) ? ' checked' : '') + '><span>' + esc(g) + '</span></label>').join('');
+  return '<div class="stack"><div><span class="eyebrow">Meu encontro com Maria</span><h1>' + esc(m.nome) + '</h1><p class="muted" style="margin:4px 0 0">' + esc(m.invoc) + ' · Virtude do mês: ' + esc(m.virtude) + '</p></div>' + seletorMes() +
+    '<div class="card"><span class="eyebrow">Maria neste mês</span><p style="margin:0">' + esc(m.mariaMes) + '</p></div>' +
+    '<div class="card"><span class="eyebrow">Palavra para guardar</span><div class="quote">“' + esc(m.palavra) + '”</div><span class="muted">' + esc(m.ref) + '</span></div>' +
+    '<div class="card"><span class="eyebrow">Oração do mês</span><p style="margin:0;font-size:18px">' + esc(m.oracao) + '</p></div>' +
+    '<div class="card"><span class="eyebrow">Meu gesto de fé</span>' + gestos + '</div>' +
+    '<div class="card">' + campo('dev-' + i + '-int', 'Minhas intenções') + campo('dev-' + i + '-fam', 'Pela minha família') + campo('dev-' + i + '-grat', 'Minha gratidão') + campo('dev-' + i + '-mes', 'Meu mês com Maria') +
+    '<p class="muted" style="margin:0;font-size:14px">O que você escreve fica salvo só neste aparelho.</p></div>' +
+    '<div class="row"><button class="btn" data-act="print-dev">' + ico('print') + 'Imprimir esta página</button><button class="btn sec" data-act="prev">' + (state.prev ? 'Esconder prévia' : 'Ver como fica impresso') + '</button></div>' +
+    (state.prev ? '<div class="preview">' + paginaDevocional(i) + '</div>' : '') + '</div>';
+}
+
+/* --- Festas --- */
+function viewFestas() {
+  const t = hoje(), hu = utc(t.y, t.m, t.d);
+  let proxMarcada = false;
+  const lista = FESTAS.map((f) => {
+    const u = utc(ANO, f[0], f[1]);
+    let cls = 'festa';
+    if (u < hu) cls += ' passou';
+    else if (!proxMarcada) { cls += ' prox'; proxMarcada = true; }
+    return '<div class="' + cls + '"><div class="dia"><b>' + f[1] + '</b><span>' + MESES_CURTO[f[0] - 1] + '</span></div><div><h3 style="font-size:20px">' + esc(f[2]) + '</h3><p class="muted" style="margin:2px 0 4px;font-size:14px">' + DIAS_LONGO[diaSemana(ANO, f[0], f[1])] + '</p><p style="margin:0">' + esc(f[3]) + '</p></div></div>';
+  }).join('');
+  return '<div class="stack"><div><span class="eyebrow">Guia das celebrações</span><h1>Festas marianas de 2027</h1></div>' +
+    '<div class="card">' + lista + '</div><div class="row"><button class="btn" data-act="print-festas">' + ico('print') + 'Imprimir o guia</button></div></div>';
+}
+
+/* --- Intenções --- */
+function viewIntencoes() {
+  const itens = store.get('intencoes', []);
+  const tipos = { pedido: 'Pedido', agradecimento: 'Agradecimento', familia: 'Pela família' };
+  const f = state.filtro;
+  const vis = itens.filter((it) => f === 'todas' || (f === 'graca' ? it.graca : it.tipo === f));
+  const filtros = [['todas', 'Todas'], ['pedido', 'Pedidos'], ['agradecimento', 'Agradecimentos'], ['familia', 'Família'], ['graca', 'Graças alcançadas']]
+    .map((x) => '<button class="chip" data-filtro="' + x[0] + '" aria-pressed="' + (f === x[0]) + '">' + x[1] + '</button>').join('');
+  const lista = vis.length ? vis.map((it) => '<div class="item' + (it.graca ? ' graca' : '') + '"><div class="row" style="justify-content:space-between"><span class="tag' + (it.graca ? ' green' : '') + '">' + tipos[it.tipo] + (it.graca ? ' · graça alcançada' : '') + '</span><span class="muted" style="font-size:13px">' + esc(it.data) + '</span></div><p>' + esc(it.texto) + '</p>' +
+    '<div class="row"><button class="mini" data-graca="' + it.id + '">' + (it.graca ? 'Desmarcar graça' : 'Marcar graça alcançada') + '</button><button class="mini del" data-del="' + it.id + '">Apagar</button></div></div>').join('')
+    : '<p class="muted" style="margin:0">' + (itens.length ? 'Nada nesta categoria ainda.' : 'Seu caderno ainda está em branco. Escreva a primeira intenção acima.') + '</p>';
+  return '<div class="stack"><div><span class="eyebrow">Caderno de intenções e gratidão</span><h1>Minhas intenções</h1></div>' +
+    '<div class="card"><label class="f">Tipo<select id="int-tipo"><option value="pedido">Pedido</option><option value="agradecimento">Agradecimento</option><option value="familia">Pela família</option></select></label>' +
+    '<label class="f">O que você quer entregar a Maria?<textarea id="int-texto" placeholder="Escreva sua intenção…"></textarea></label>' +
+    '<div class="row"><button class="btn" data-act="add-int">Guardar no caderno</button></div></div>' +
+    '<div class="chips">' + filtros + '</div><div class="stack" style="gap:10px">' + lista + '</div>' +
+    '<div class="row"><button class="btn sec" data-act="print-int">' + ico('print') + 'Imprimir meu caderno</button><button class="btn sec" data-act="print-branco">' + ico('print') + 'Páginas em branco</button></div>' +
+    '<p class="muted" style="margin:0;font-size:14px">Suas intenções ficam salvas só neste aparelho. Ninguém mais tem acesso a elas.</p></div>';
+}
+
+/* --- Bônus --- */
+function viewBonus() {
+  if (!COMPLETO) {
+    return '<div class="stack"><div><span class="eyebrow">Bônus exclusivos</span><h1>Desbloqueie os bônus</h1></div>' +
+      bloqueado('50 cartões de oração com Maria', 'Orações e mensagens de fé para imprimir, recortar e guardar na Bíblia ou presentear.') +
+      bloqueado('Preparando 2027 com Maria', 'Páginas de gratidão, intenções e virtudes e uma oração para entregar o novo ano a Deus.') +
+      bloqueado('Versão econômica para impressão', 'Imprima o calendário em casa gastando bem menos tinta.') +
+      bloqueado('Comunidade Ponto da Fé', 'Partilhe a fé com outras pessoas que amam Nossa Senhora.') + '</div>';
+  }
+  const subs = [['cartoes', 'Cartões de oração'], ['preparar', 'Preparando 2027'], ['econ', 'Versão econômica'], ['comunidade', 'Comunidade']];
+  const nav = '<div class="sub">' + subs.map((s) => '<button class="chip" data-sub="' + s[0] + '" aria-pressed="' + (state.sub === s[0]) + '">' + s[1] + '</button>').join('') + '</div>';
+  let corpo = '';
+  if (state.sub === 'cartoes') {
+    const s = state.sorteado;
+    corpo = '<div class="card"><span class="eyebrow">Bônus 1</span><h2>50 cartões de oração com Maria</h2><p class="muted" style="margin:0">Sorteie um cartão para hoje, ou imprima todos para recortar e guardar.</p>' +
+      '<div class="row"><button class="btn" data-act="sortear">' + ico('dice') + 'Sortear um cartão</button><button class="btn sec" data-act="print-cartoes">' + ico('print') + 'Imprimir os 50</button></div>' +
+      (s != null ? '<div class="pc sorteado" style="padding:24px"><span class="n">CARTÃO ' + (s + 1) + '</span><b style="font-size:30px">' + esc(CARTOES[s][0]) + '</b><p style="font-size:17px">' + esc(CARTOES[s][1]) + '</p></div>' : '') + '</div>' +
+      '<div class="cards">' + CARTOES.map((c, k) => '<div class="pc"><span class="n">' + (k + 1) + '</span><b>' + esc(c[0]) + '</b><p>' + esc(c[1]) + '</p></div>').join('') + '</div>';
+  } else if (state.sub === 'preparar') {
+    const v = VIRTUDES.map((t, k) => '<label class="check"><input type="checkbox" data-k="prep-v' + k + '"' + (store.get('prep-v' + k, false) ? ' checked' : '') + '><span>' + esc(t) + '</span></label>').join('');
+    corpo = '<div class="card"><span class="eyebrow">Bônus 2</span><h2>Preparando 2027 com Maria</h2><p class="muted" style="margin:0">Seu ano novo com Maria começa antes de janeiro.</p></div>' +
+      '<div class="card"><h3>Minha gratidão por 2026</h3>' + campo('prep-g1', 'Pelo que sou grata neste ano') + campo('prep-g2', 'Pessoas que Deus colocou no meu caminho') + campo('prep-g3', 'Graças que recebi') + '</div>' +
+      '<div class="card"><h3>Minhas intenções para 2027</h3>' + campo('prep-i1', 'Pessoal') + campo('prep-i2', 'Família') + campo('prep-i3', 'Pedidos especiais') + '</div>' +
+      '<div class="card"><h3>Virtudes que desejo cultivar</h3>' + v + '</div>' +
+      '<div class="card"><h3>Entrego meu novo ano a Deus</h3><div class="quote" style="font-size:20px">' + esc(ORACAO_ENTREGA) + '</div>' + campo('prep-princ', 'Minha intenção principal para 2027') + '</div>' +
+      '<div class="row"><button class="btn" data-act="print-prep">' + ico('print') + 'Imprimir as 3 páginas</button></div>';
+  } else if (state.sub === 'econ') {
+    corpo = '<div class="card"><span class="eyebrow">Bônus 3</span><h2>Versão econômica para impressão</h2><p style="margin:0">Mesmas páginas, com fundo branco, sem áreas coloridas e com a ilustração só em traço. Ideal para imprimir em casa gastando bem menos tinta.</p>' +
+      '<div class="row"><button class="btn" data-act="print-cal-econ">' + ico('print') + 'Calendário econômico (12 meses)</button><button class="btn sec" data-act="print-dev-econ">' + ico('print') + 'Devocionais econômicos</button></div></div>' +
+      '<div class="preview econ">' + paginaCalendario(state.mes) + '</div>';
+  } else {
+    corpo = '<div class="card"><span class="eyebrow">Bônus 4</span><h2>Comunidade Ponto da Fé</h2><p style="margin:0">Um cantinho para partilhar a fé com outras pessoas que amam Nossa Senhora: mensagens, orações, reflexões e inspiração para o dia a dia.</p>' +
+      (CONFIG.linkComunidade
+        ? '<div class="row"><a class="btn" href="' + esc(CONFIG.linkComunidade) + '" target="_blank" rel="noopener">Entrar na comunidade</a></div>'
+        : '<p class="muted" style="margin:0">O link de entrada será enviado para o seu e-mail de compra.</p>') + '</div>';
+  }
+  return '<div class="stack"><div><span class="eyebrow">Seus bônus</span><h1>Bônus do Plano Completo</h1></div>' + nav + corpo + '</div>';
+}
+
+const VIEWS = { hoje: viewHoje, calendario: viewCalendario, devocional: viewDevocional, festas: viewFestas, intencoes: viewIntencoes, bonus: viewBonus };
+function render(rolar) {
+  if (!VIEWS[state.view]) state.view = 'hoje';
+  $('#tabs').innerHTML = TABS.map((t) => '<button class="tab" data-go="' + t[0] + '"' + (state.view === t[0] ? ' aria-current="page"' : '') + '>' + ico(t[0]) + '<span>' + t[1] + '</span></button>').join('');
+  $('#app').innerHTML = VIEWS[state.view]();
+  store.set('view', state.view); store.set('mes', state.mes);
+  if (rolar) { window.scrollTo(0, 0); }
+  const ativo = document.querySelector('.chips .chip[aria-pressed="true"]');
+  if (ativo && ativo.scrollIntoView) ativo.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('button');
+  if (!el) return;
+  const d = el.dataset;
+  if (d.go) { state.view = d.go; if (d.sub) state.sub = d.sub; if (d.mes != null) state.mes = +d.mes; state.prev = false; render(true); $('#app').focus({ preventScroll: true }); return; }
+  if (d.mes != null) { state.mes = +d.mes; state.prev = false; render(false); return; }
+  if (d.sub) { state.sub = d.sub; render(false); return; }
+  if (d.filtro) { state.filtro = d.filtro; render(false); return; }
+  if (d.graca) { const its = store.get('intencoes', []); const it = its.find((x) => x.id === d.graca); if (it) { it.graca = !it.graca; store.set('intencoes', its); toast(it.graca ? 'Graças a Deus! Graça marcada.' : 'Marcação removida.'); } render(false); return; }
+  if (d.del) { if (confirm('Apagar esta intenção?')) { store.set('intencoes', store.get('intencoes', []).filter((x) => x.id !== d.del)); render(false); } return; }
+  switch (d.act) {
+    case 'print-cal': imprimir(paginaCalendario(state.mes), state.econ); break;
+    case 'print-cal-all': imprimir(MESES.map((m, i) => paginaCalendario(i)).join(''), state.econ); break;
+    case 'print-dev': imprimir(paginaDevocional(state.mes), false); break;
+    case 'print-dev-all': imprimir(MESES.map((m, i) => paginaDevocional(i)).join(''), false); break;
+    case 'print-cal-econ': imprimir(MESES.map((m, i) => paginaCalendario(i)).join(''), true); break;
+    case 'print-dev-econ': imprimir(MESES.map((m, i) => paginaDevocional(i)).join(''), true); break;
+    case 'print-festas': imprimir(paginaFestas(), false); break;
+    case 'print-cartoes': imprimir(paginasCartoes(), false); break;
+    case 'print-prep': imprimir(paginasPreparando(), false); break;
+    case 'print-int': imprimir(paginaIntencoes(store.get('intencoes', [])), false); break;
+    case 'print-branco': imprimir(paginasEmBranco(), false); break;
+    case 'prev': state.prev = !state.prev; render(false); break;
+    case 'sortear': { let n; do { n = Math.floor(Math.random() * CARTOES.length); } while (n === state.sorteado && CARTOES.length > 1); state.sorteado = n; render(false); break; }
+    case 'add-int': {
+      const tx = $('#int-texto').value.trim();
+      if (!tx) { toast('Escreva sua intenção antes de guardar.'); $('#int-texto').focus(); return; }
+      const t = hoje();
+      const its = store.get('intencoes', []);
+      its.unshift({ id: String(Date.now()), tipo: $('#int-tipo').value, texto: tx, data: String(t.d).padStart(2, '0') + '/' + String(t.m).padStart(2, '0') + '/' + t.y, graca: false });
+      store.set('intencoes', its); state.filtro = 'todas'; toast('Intenção guardada no seu caderno.'); render(false); break;
+    }
+  }
+});
+document.addEventListener('change', (e) => {
+  const el = e.target;
+  if (el.dataset.act === 'econ') { state.econ = el.checked; render(false); return; }
+  if (el.dataset.k && el.type === 'checkbox') store.set(el.dataset.k, el.checked);
+});
+document.addEventListener('input', (e) => {
+  const el = e.target;
+  if (el.dataset.k && el.tagName === 'TEXTAREA') store.set(el.dataset.k, el.value);
+});
+
+$('#plan-badge').textContent = COMPLETO ? 'Plano Completo' : 'Plano Básico';
+render(false);
+})();
+</script>
+</body>
+</html>
